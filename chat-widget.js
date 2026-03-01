@@ -11,7 +11,7 @@
 const SonaChatWidget = (function() {
     // Default configuration
     let config = {
-        apiUrl: '/api/chat',
+        apiUrl: 'https://history-sonachatbot.onrender.com/api/chat',
         position: 'bottom-right',
         primaryColor: '#4a90e2',
         title: 'Sona College Assistant',
