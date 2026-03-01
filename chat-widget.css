@@ -1,0 +1,323 @@
+/* 
+ * Sona ChatBot Widget Styles
+ * Reusable chatbot UI that can be embedded in any application
+ */
+
+/* CSS Variables for easy customization */
+:root {
+    --chat-primary-color: #4a90e2;
+    --chat-primary-hover: #357abd;
+    --chat-secondary-color: #f5f5f5;
+    --chat-text-color: #333;
+    --chat-bg-color: #fff;
+    --chat-border-color: #ddd;
+    --chat-user-msg-bg: #4a90e2;
+    --chat-user-msg-text: #fff;
+    --chat-bot-msg-bg: #f0f0f0;
+    --chat-bot-msg-text: #333;
+    --chat-width: 380px;
+    --chat-height: 500px;
+    --chat-button-size: 60px;
+    --chat-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+/* Chat Widget Container */
+.sona-chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999999;
+    font-family: var(--chat-font-family);
+}
+
+/* Chat Toggle Button */
+.sona-chat-toggle-btn {
+    width: var(--chat-button-size);
+    height: var(--chat-button-size);
+    border-radius: 50%;
+    background: var(--chat-primary-color);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.sona-chat-toggle-btn:hover {
+    background: var(--chat-primary-hover);
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.sona-chat-toggle-btn svg {
+    width: 28px;
+    height: 28px;
+    fill: white;
+    transition: transform 0.3s ease;
+}
+
+/* Rotate icon when chat is open */
+.sona-chat-toggle-btn.active svg {
+    transform: rotate(90deg);
+}
+
+/* Chat Window */
+.sona-chat-window {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: var(--chat-width);
+    height: var(--chat-height);
+    background: var(--chat-bg-color);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.3s ease;
+}
+
+.sona-chat-window.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* Chat Header */
+.sona-chat-header {
+    background: var(--chat-primary-color);
+    color: white;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sona-chat-header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sona-chat-header-title h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sona-chat-header-title span {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.sona-chat-close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.sona-chat-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.sona-chat-close-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+/* Chat Messages Container */
+.sona-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--chat-secondary-color);
+}
+
+/* Message Bubbles */
+.sona-message {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sona-message-user {
+    align-self: flex-end;
+    background: var(--chat-user-msg-bg);
+    color: var(--chat-user-msg-text);
+    border-bottom-right-radius: 4px;
+}
+
+.sona-message-bot {
+    align-self: flex-start;
+    background: var(--chat-bot-msg-bg);
+    color: var(--chat-bot-msg-text);
+    border-bottom-left-radius: 4px;
+}
+
+/* Typing Indicator */
+.sona-typing-indicator {
+    display: none;
+    align-self: flex-start;
+    background: var(--chat-bot-msg-bg);
+    padding: 12px 16px;
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
+}
+
+.sona-typing-indicator.show {
+    display: flex;
+    gap: 4px;
+}
+
+.sona-typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background: #999;
+    border-radius: 50%;
+    animation: typing 1.4s infinite ease-in-out;
+}
+
+.sona-typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.sona-typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+    0%, 60%, 100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-6px);
+    }
+}
+
+/* Chat Input Area */
+.sona-chat-input-area {
+    padding: 16px;
+    background: white;
+    border-top: 1px solid var(--chat-border-color);
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.sona-chat-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--chat-border-color);
+    border-radius: 24px;
+    font-size: 14px;
+    font-family: var(--chat-font-family);
+    resize: none;
+    outline: none;
+    max-height: 100px;
+    transition: border-color 0.2s;
+}
+
+.sona-chat-input:focus {
+    border-color: var(--chat-primary-color);
+}
+
+.sona-chat-send-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--chat-primary-color);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.sona-chat-send-btn:hover:not(:disabled) {
+    background: var(--chat-primary-hover);
+    transform: scale(1.05);
+}
+
+.sona-chat-send-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.sona-chat-send-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+    margin-left: 2px;
+}
+
+/* Scrollbar Styling */
+.sona-chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sona-chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sona-chat-messages::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+.sona-chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+/* Error Message */
+.sona-message-error {
+    align-self: center;
+    background: #fee;
+    color: #c33;
+    padding: 8px 16px;
+    font-size: 13px;
+}
+
+/* Welcome Message */
+.sona-welcome-message {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.sona-welcome-message h4 {
+    margin: 0 0 8px 0;
+    color: #333;
+}
